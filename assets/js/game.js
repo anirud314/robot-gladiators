@@ -46,7 +46,7 @@ var fight = function(enemyName) {
         }
     }
     
-}
+};
 
 var startGame = function() {
     //reset Player stats
@@ -60,6 +60,13 @@ var startGame = function() {
             enemyHealth = 50;
             //debugger;
             fight(pickedEnemyName);
+
+            if(playerRobotHealth > 0 && i < enemyNames.length - 1) {
+                var storeConfirm = window.confirm("Fight is over, visit the store before the next round?")
+                if (storeConfirm){
+                    shop();
+                }
+            }
         }
         else {
             window.alert("You have lost your robot in battle! Game Over!");
@@ -69,7 +76,7 @@ var startGame = function() {
     endGame();
     
     
-}
+};
 
 var endGame = function(){
     if (playerRobotHealth > 0){
@@ -86,6 +93,47 @@ var endGame = function(){
     else{
         window.alert("Thank you for playing Robot Gladiators, Come back again soon");
     }
-}
+};
+
+var shop = function(){
+    console.log("entered the shop");
+    var shopOptionPrompt = window.prompt("Would you like to REFILL your health, UPGRADE your attack or LEAVE the store? \n Please enter value in quotes to make a choice: \n 'REFILL' - increase health by 20 | cost 7 money \n 'UPGRADE' - increase attack by 6 | cost 7 money \n 'LEAVE' - Leave the store").toLowerCase();
+
+    switch(shopOptionPrompt) {
+        case "refill": 
+            if (playerMoney >= 7) {
+                window.alert("Refilling players health by 20 for 7 money");
+                
+                playerRobotHealth = playerRobotHealth + 20;
+                playerMoney = playerMoney - 7;
+                console.log("Player money " + playerMoney + " Player health" + playerRobotHealth);
+            }
+            else {
+                window.alert("You don't have enough money");
+            }
+            break;
+        case "upgrade":
+            if (playerMoney >= 7) {
+                window.alert("Upgrading player's attack by 6 for 7 money");
+
+                playerRobotAttack = playerRobotAttack + 6;
+                playerMoney = playerMoney - 7;
+                console.log("Player money " + playerMoney + " Player Attack " + playerRobotAttack);
+            }
+            else {
+                window.alert("You don't have enough money");
+            }
+            break;
+        case "leave":
+            window.alert("Leaving the store; Thank you have a nice day");
+
+            break;
+        default:
+            window.alert("Try again; Please input a valid option")
+
+            shop();
+            break;
+    }
+};
     
 startGame();
